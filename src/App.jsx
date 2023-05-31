@@ -31,7 +31,7 @@ function App() {
 
   return (
     <>
-      <h1>Pokemon Api</h1>
+      <h1>PokéAPI</h1>
       <button className='button' onClick={getPokemon}>
         Traer Pokemon
       </button>
