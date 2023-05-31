@@ -45,6 +45,7 @@ function App() {
         <div key={index}>
           <p className='title'>{poke.name}</p>
           <img
+            className='logo'
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
               poke.url.split('/')[6]
             }.png`}
