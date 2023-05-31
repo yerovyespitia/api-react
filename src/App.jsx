@@ -1,33 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pokemon, setPokemon] = useState([])
+  const [offset, setOffset] = useState(0)
+
+  const getPokemon = async () => {
+    const res = await fetch(
+      `https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`
+    )
+    const data = await res.json()
+    setPokemon(data.results)
+  }
+
+  useEffect(() => {
+    if (pokemon.length > 0) {
+      getPokemon()
+    }
+  }, [offset])
+
+  const handleNextClick = () => {
+    setOffset((prevOffset) => prevOffset + 10)
+  }
+
+  const handlePreviousClick = () => {
+    if (offset > 0) {
+      setOffset((prevOffset) => prevOffset - 10)
+    }
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Pokemon Api</h1>
+      <button onClick={getPokemon}>Traer Pokemon</button>
+      <button onClick={handleNextClick}>Siguiente</button>
+      <button onClick={handlePreviousClick}>Atrás</button>
+      {pokemon.map((poke, index) => (
+        <div key={index}>
+          <p>{poke.name}</p>
+          <img
+            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
+              poke.url.split('/')[6]
+            }.png`}
+            alt={poke.name}
+          />
+        </div>
+      ))}
     </>
   )
 }
