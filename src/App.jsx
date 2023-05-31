@@ -32,12 +32,18 @@ function App() {
   return (
     <>
       <h1>Pokemon Api</h1>
-      <button onClick={getPokemon}>Traer Pokemon</button>
-      <button onClick={handleNextClick}>Siguiente</button>
-      <button onClick={handlePreviousClick}>Atrás</button>
+      <button className='button' onClick={getPokemon}>
+        Traer Pokemon
+      </button>
+      <button className='button' onClick={handleNextClick}>
+        Siguiente
+      </button>
+      <button className='button' onClick={handlePreviousClick}>
+        Atrás
+      </button>
       {pokemon.map((poke, index) => (
         <div key={index}>
-          <p>{poke.name}</p>
+          <p className='title'>{poke.name}</p>
           <img
             src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
               poke.url.split('/')[6]
